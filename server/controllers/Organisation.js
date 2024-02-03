@@ -1,4 +1,5 @@
 const Organisation = require('../models/Organisation');
+const TaskManageBoard = require('../models/TaskManageBoard');
 
 exports.createOrganisastion = async (req, res) => {
 
@@ -19,10 +20,16 @@ exports.createOrganisastion = async (req, res) => {
 
         await organisation.save();
 
+        const taskManageBoard = new TaskManageBoard({
+            organisation: name
+        });
+
+        await taskManageBoard.save();
+
         return res.status(200).json({
             success: true,
             message: "Organisation created successfully",
-        })
+        });
     } catch (error) {
         return res.status(500).json({ 
             success: false, 
