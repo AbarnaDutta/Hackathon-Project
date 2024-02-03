@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { createNewColumn, deleteColumn, updateColumn, getAllColumns } = require('../controllers/Column');
 const { createNewTask, deleteTask, updateTask, getAllTasks } = require('../controllers/Tasks');
-const { createNewBoard, updateBoard } = require('../controllers/Board');
+const { createNewBoard, updateBoard, deleteBoard } = require('../controllers/Board');
 const { createOrganisastion } = require('../controllers/Organisation');
  
 router.post('/createOrganisation', createOrganisastion);
@@ -17,5 +17,6 @@ router.post('/updateTask', updateTask);
 router.post('/deleteColumn', deleteColumn);
 router.post('/deleteTask', deleteTask);
 router.post('/updateBoard', updateBoard);
+router.post('/deleteBoard', deleteBoard);
 
 module.exports = router;

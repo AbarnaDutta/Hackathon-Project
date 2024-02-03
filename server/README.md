@@ -107,3 +107,29 @@ http://localhost:5000/api/v1/updateTask
   "content": "My Task 1"
 }
 ```
+
+9. Update a Board:
+
+```bash
+http://localhost:5000/api/v1/updateBoard
+```
+
+```json
+{
+  "id": "Board 1",
+  "title": "My Board 1"
+}
+```
+
+10. Delete a Board:
+
+```bash
+http://localhost:5000/api/v1/deleteBoard
+```
+
+```json
+{
+  "id": "Board 1",
+  "organisation": "ABC"
+}
+```

@@ -1,5 +1,7 @@
 const TaskManageBoard = require('../models/TaskManageBoard');
 const Board = require('../models/Board');
+const Columns = require('../models/Columns');
+const Tasks = require('../models/Tasks');
 
 exports.createNewBoard = async (req, res) => {
     try {
@@ -95,6 +97,65 @@ exports.updateBoard = async (req, res) => {
 exports.deleteBoard = async (req, res) => {
 
     try {
+
+        const { id, organisation } = req.body;
+
+        if (!id || !organisation) {
+            return res.status(400).json({
+                success: false,
+                message: "Please include all the required fields"
+            });
+        }
+
+        const board = await Board.findOne({ id: id });
+
+        if (!board) {
+            return res.status(404).json({
+                success: false,
+                message: "Board not found"
+            });
+        }
+
+        const taskManageBoard = await TaskManageBoard.findOne({ organisation: organisation });
+
+        if (!taskManageBoard) {
+            return res.status(404).json({
+                success: false,
+                message: `No task manage board found for the organisation ${organisation}`
+            });
+        }
+
+        taskManageBoard.boards = taskManageBoard.boards.filter((boardId) => boardId.toString() !== board._id.toString());
+
+        const allColumns = await Columns.find({});
+
+        console.log("allColumns: ", allColumns);
+
+        for (const column of allColumns) {
+            if (column.boardId.toString() === board.id.toString()) {
+                await Columns.findByIdAndDelete(column._id);
+                await taskManageBoard.columns.pull(column._id);
+                console.log("Deleted column: ", column);
+            }
+        }
+
+        const allTasks = await Tasks.find({});
+
+        for (const task of allTasks) {
+            if (task.boardId.toString() === board.id.toString()) {
+                await Tasks.findByIdAndDelete(task._id);
+                await taskManageBoard.tasks.pull(task._id);
+                console.log("Deleted task: ", task);
+            }
+        }
+
+        await Board.findByIdAndDelete(board._id);
+        taskManageBoard.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Board deleted successfully"
+        });
         
     } catch (error) {
         return res.status(500).json({
