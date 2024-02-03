@@ -1,15 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const { createNewColumn } = require('../controllers/CreateNewColumn');
-const { createNewTask } = require('../controllers/CreateNewTask');
-const { createNewBoard } = require('../controllers/CreateNewBoard');
-const { getAllColumns } = require('../controllers/GetAllColumns');
-const { getAllTasks } = require('../controllers/GetAllTasks');
-const { deleteColumn } = require('../controllers/DeleteColumn');
-const { deleteTask } = require('../controllers/DeleteTask');
-const { updateColumn } = require('../controllers/UpdateColumn');
-const { updateTask } = require('../controllers/UpdateTask'); 
+const { createNewColumn, deleteColumn, updateColumn, getAllColumns } = require('../controllers/Column');
+const { createNewTask, deleteTask, updateTask, getAllTasks } = require('../controllers/Tasks');
+const { createNewBoard } = require('../controllers/Board');
  
 router.post('/createNewBoard', createNewBoard);
 router.post('/createNewColumn', createNewColumn);

@@ -11,6 +11,11 @@ const ColumnsSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    boardId: {
+        type: String,
+        required: true,
+        trim: true
+    },
     organisation: {
         type: String,
         required: true,

@@ -6,6 +6,10 @@ const TaskManageBoardSchema = new mongoose.Schema({
         required: true,
         trim: true
     },
+    boards: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Board'
+    }],
     columns: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Columns'

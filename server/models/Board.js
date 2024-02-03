@@ -1,22 +1,12 @@
 const mongoose = require('mongoose');
 
-const TasksSchema = new mongoose.Schema({
+const boardSchema = new mongoose.Schema({
     id: {
         type: String,
         required: true,
         trim: true
     },
-    columnId: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    boardId: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    content: {
+    title: {
         type: String,
         required: true,
         trim: true
@@ -28,4 +18,4 @@ const TasksSchema = new mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Tasks', TasksSchema);
+module.exports = mongoose.model('Board', boardSchema);
