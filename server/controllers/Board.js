@@ -12,6 +12,13 @@ exports.createNewBoard = async (req, res) => {
             });
         }
 
+        if(await Board.findOne({id: id})) {
+            return res.status(404).json({
+                success: false,
+                message: "The Board already exists"
+            });
+        }
+
         const board = new Board({
             id: id,
             title: title,
@@ -30,6 +37,7 @@ exports.createNewBoard = async (req, res) => {
         }
 
         taskManageBoard.boards.push(board._id);
+        taskManageBoard.save();
 
         return res.status(200).json({
             success: true,
@@ -41,5 +49,58 @@ exports.createNewBoard = async (req, res) => {
             message: "Can't create new task manage board",
             error: error.message
         });
+    }
+}
+
+exports.updateBoard = async (req, res) => {
+
+    try {
+
+        const { id, title } = req.body;
+
+        if (!id || !title) {
+            return res.status(400).json({
+                success: false,
+                message: "Please include all the required fields"
+            });
+        }
+
+        const board = await Board.findOne({ id: id });
+
+        if (!board) {
+            return res.status(404).json({
+                success: false,
+                message: "Board not found"
+            });
+        }
+
+        board.title = title;
+        await board.save();
+
+        return res.status(200).json({
+            success: true,
+            message: "Board updated successfully",
+            data: board
+        });
+        
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Can't update the task manage board",
+            error: error.message
+        })
+    }
+}
+
+exports.deleteBoard = async (req, res) => {
+
+    try {
+        
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Can't delete the task manage board",
+            error: error.message
+        })
     }
 }

@@ -1,27 +1,41 @@
 const TaskManageBoard = require('../models/TaskManageBoard');
 const Columns = require('../models/Columns');
 const Tasks = require('../models/Tasks');
+const Board = require('../models/Board');
 
 exports.createNewTask = async (req, res) => {
 
     try {
-        const { id, content, columnId, organisation } = req.body;
+        const { id, content, columnId, boardId, organisation } = req.body;
 
-        if (!id || !content || !columnId || !organisation) {
+        if (!id || !content || !columnId || !organisation || !boardId) {
             return res.status(400).json({
                 success: false,
                 message: "Please include all the required fields"
             });
         }
 
+        if(await Tasks.findOne({id: id})){
+            return res.status(404).json({
+                success: false,
+                message: "Task already exists"
+            });
+        }
+
+        if(!await Board.findOne({id: boardId})){
+            return res.status(404).json({
+                success: false,
+                message: "Board not found"
+            });
+        }
+
         const newTask = new Tasks({
             id: id,
             columnId: columnId,
+            boardId: boardId,
             content: content,
             organisation: organisation
         });
-
-        await newTask.save();
 
         const taskManageBoard = await TaskManageBoard.findOne({ organisation: organisation });
         const column = await Columns.findOne({ id: columnId });
@@ -32,10 +46,11 @@ exports.createNewTask = async (req, res) => {
                 message: `Few Details not found for the organisation ${organisation}`
             });
         }
-
+        
         taskManageBoard.tasks.push(newTask._id);
         column.tasks.push(newTask._id);
 
+        await newTask.save();
         await taskManageBoard.save();
         await column.save();
 
@@ -58,9 +73,9 @@ exports.deleteTask = async (req, res) => {
 
     try {
 
-        const { id, columnId, boardId, organisation } = req.body;
+        const { id, columnId, organisation } = req.body;
 
-        if (!id || !columnId || !organisation || boardId) {
+        if (!id || !columnId || !organisation) {
             return res.status(400).json({
                 success: false,
                 message: "Please include all the required fields"

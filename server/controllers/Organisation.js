@@ -13,6 +13,13 @@ exports.createOrganisastion = async (req, res) => {
             })
         }
 
+        if(await Organisation.findOne({id: id})) {
+            return res.status(404).json({
+                success: false,
+                message: "The Organisation already exists"
+            })
+        }
+
         const organisation = new Organisation({
             id: id,
             name: name

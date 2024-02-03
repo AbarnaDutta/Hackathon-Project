@@ -14,6 +14,20 @@ exports.createNewColumn = async (req, res) => {
             });
         }
 
+        if(await Columns.findOne({id: id})){
+            return res.status(404).json({
+                success: false,
+                message: "Column already exists"
+            });
+        }
+
+        if(!await Board.findOne({id: boardId})){
+            return res.status(404).json({
+                success: false,
+                message: "Board not found"
+            });
+        }
+
         const newColumn = new Columns({
             id: id,
             title: title,
