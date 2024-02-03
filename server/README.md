@@ -3,7 +3,7 @@
 1. CreateNewBoard:
 
 ```bash
-https://localhost:5000/api/v1/createNewBoard
+http://localhost:5000/api/v1/createNewBoard
 ```
 
 ```json
