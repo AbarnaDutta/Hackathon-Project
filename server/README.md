@@ -133,3 +133,30 @@ http://localhost:5000/api/v1/deleteBoard
   "organisation": "ABC"
 }
 ```
+
+11. Delete a Column:
+
+```bash
+http://localhost:5000/api/v1/deleteColumn
+```
+
+```json
+{
+  "id": "Column 1",
+  "organisation": "ABC"
+}
+```
+
+12. Delete a Task:
+
+```bash
+http://localhost:5000/api/v1/deleteTask
+```
+
+```json
+{
+  "id": "Task 1",
+  "columnId": "Column 1",
+  "organisation": "ABC"
+}
+```

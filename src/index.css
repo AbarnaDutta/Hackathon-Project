@@ -10,6 +10,7 @@
 ::-webkit-scrollbar:horizontal {
     height: 9px;
     display: block;
+    cursor: pointer;
 }
 
 ::-webkit-scrollbar-thumb {

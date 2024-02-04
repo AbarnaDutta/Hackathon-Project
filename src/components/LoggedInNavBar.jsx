@@ -17,7 +17,7 @@ export default function LoggedInNavBar() {
         <div className='shadow-md w-full top-0 left-0'>
             <div className='md:flex items-center justify-between py-4 md:px-10 px-7 bg-indigo-950'>
                 <div className='navbar-logo font-bold text-4xl cursor-pointer flex items-center text-white'>
-                    TeamCollab
+                    TeamSync
                 </div>
 
                 <div onClick={() => setOpen(!open)} className='text-3xl text-white absolute right-8 top-6 cursor-pointer md:hidden'>
@@ -34,7 +34,7 @@ export default function LoggedInNavBar() {
                             </li>
                         ))
                     }
-                    <button className='duration-500'>
+                    <button className='duration-500 bg-transparent hover:bg-transparent'>
                         <UserButton />
                     </button>
 
