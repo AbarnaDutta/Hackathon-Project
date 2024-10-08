@@ -1,0 +1,3 @@
+import calendar
+# Displaying the calendar for the specified month and year
+print(calendar.month(int(input("Enter year: ")), int(input("Enter month: "))))
